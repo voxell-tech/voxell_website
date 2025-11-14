@@ -22,6 +22,10 @@
   #html.elem("div", attrs: (
     style: "padding: 20pt; text-align: center; font-size: 18pt",
   ))[
+    #link("./")[#image(
+      "assets/icons/voxell.svg",
+      height: 60pt,
+    )]
     = Voxell
 
     Building the next generation of open-source ecosystem for makers.
