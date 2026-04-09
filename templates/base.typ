@@ -3,6 +3,7 @@
 
 #import "/templates/tola.typ" as tola
 #import "/utils/tola.typ": cls
+#import "/components/ui.typ" as ui
 
 // ============================================================================
 // Configuration
@@ -69,5 +70,19 @@
   // Render
   // --------------------------------------------------------------------------
 
+  html.nav(class: "border-b border-white/10")[
+    #html.div(class: "max-w-3xl mx-auto px-4 py-3 flex items-center justify-between")[
+      #html.a(class: "font-semibold hover:text-accent transition-colors", href: "/")[Voxell]
+      #html.div(class: "flex items-center gap-6")[
+        #ui.nav-link("/projects", [Projects])
+        #html.a(
+          class: "text-muted hover:text-accent transition-colors",
+          href: "https://blog.voxell.dev",
+          target: "_blank",
+          rel: ("noopener", "noreferrer"),
+        )[Blog ↗]
+      ]
+    ]
+  ]
   html.main(class: "max-w-3xl mx-auto px-4 py-8")[#body]
 }
