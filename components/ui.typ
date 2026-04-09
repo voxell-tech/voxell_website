@@ -28,7 +28,9 @@
     class: "block mb-6 p-4 border border-white/10 rounded-lg bg-surface/50 hover:bg-surface transition-colors no-underline group",
     href: post.permalink,
   )[
-    #html.h3(class: "text-xl font-semibold mb-2 group-hover:text-accent transition-colors")[
+    #html.h3(
+      class: "text-xl font-semibold mb-2 group-hover:text-accent transition-colors",
+    )[
       #post.title
     ]
 
@@ -45,17 +47,17 @@
 }
 
 /// Project card with name, star count, description, and tags
-#let project-card(name, url, stars, description, tags: ()) = html.div(
-  class: "p-4 bg-surface rounded-lg border border-white/10 hover:border-accent/30 transition-colors",
+#let project-card(name, url, stars, description, tags: ()) = html.a(
+  class: "block p-4 bg-surface rounded-lg border border-white/10 hover:border-accent/30 transition-colors",
+  href: url,
+  target: "_blank",
+  rel: ("noopener", "noreferrer"),
 )[
   #html.div(class: "flex items-start justify-between mb-2")[
-    #html.a(
-      class: "font-bold text-lg hover:text-accent transition-colors",
-      href: url,
-      target: "_blank",
-      rel: ("noopener", "noreferrer"),
-    )[#name]
-    #html.span(class: "text-sm text-muted whitespace-nowrap ml-2")[⭐ #str(stars)]
+    #html.span(class: "font-bold text-lg")[#name]
+    #html.span(
+      class: "text-sm text-muted whitespace-nowrap ml-2",
+    )[⭐ #str(stars)]
   ]
   #html.p(class: "text-muted text-sm mb-3")[#description]
   #if tags.len() > 0 {
@@ -93,8 +95,12 @@
     ]
 
     #html.div(class: "grid gap-4")[
-      #html.div(class: "rounded-lg border border-white/10 bg-slate-950/70 overflow-hidden")[
-        #html.div(class: "border-b border-white/10 px-3 py-2 text-xs uppercase tracking-wide text-slate-400")[
+      #html.div(
+        class: "rounded-lg border border-white/10 bg-slate-950/70 overflow-hidden",
+      )[
+        #html.div(
+          class: "border-b border-white/10 px-3 py-2 text-xs uppercase tracking-wide text-slate-400",
+        )[
           #code-label
         ]
         #html.div(class: "p-3 text-sm")[
@@ -102,8 +108,12 @@
         ]
       ]
 
-      #html.div(class: "rounded-lg border border-cyan-500/30 bg-surface/40 overflow-hidden")[
-        #html.div(class: "border-b border-cyan-500/20 px-3 py-2 text-xs uppercase tracking-wide text-cyan-300")[
+      #html.div(
+        class: "rounded-lg border border-cyan-500/30 bg-surface/40 overflow-hidden",
+      )[
+        #html.div(
+          class: "border-b border-cyan-500/20 px-3 py-2 text-xs uppercase tracking-wide text-cyan-300",
+        )[
           #preview-label
         ]
         #html.div(class: "p-3 text-sm")[

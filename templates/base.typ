@@ -72,7 +72,9 @@
 
   html.nav(class: "border-b border-white/10")[
     #html.div(class: "max-w-3xl mx-auto px-4 py-3 flex items-center justify-between")[
-      #html.a(class: "font-semibold hover:text-accent transition-colors", href: "/")[Voxell]
+      #html.a(class: "opacity-75 hover:opacity-100 transition-opacity", href: "/")[
+        #html.elem("img", attrs: (src: "/icons/voxell.svg", style: "height: 1.5rem; display: inline-block;"))
+      ]
       #html.div(class: "flex items-center gap-6")[
         #ui.nav-link("/projects", [Projects])
         #html.a(
