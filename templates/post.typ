@@ -63,21 +63,21 @@
 
     let tags-view = if m.tags.len() > 0 {
       html.div(class: "flex flex-wrap justify-center gap-2 my-4")[
-        #for tag in m.tags { html.span(class: "px-2 py-1 text-sm bg-surface rounded text-cyan-400")[#tag] }
+        #for tag in m.tags { html.span(class: "px-2 py-1 text-sm bg-surface rounded text-accent")[#tag] }
       ]
     }
 
     // TOC using headings from @tola/current
     let toc-view = if headings.len() > 0 {
-      html.nav(class: "my-6 p-4 border border-white/10")[
+      html.nav(class: "my-6 p-4 border border-text/10")[
         #html.div(class: "font-bold mb-3")[Contents]
         #html.div(class: "text-sm space-y-1")[
           #for h in headings {
             let id = heading-id(h.text)
             let indent = if h.level == 1 { "" } else { "pr-2" }
             let prefix = if h.level == 1 { "" } else { "→" }
-            let prefix = html.span(class: cls("text-white/75", indent))[#prefix]
-            let text = html.a(class: "hover:text-sky-400 hover:underline underline-offset-4", href: "#" + id)[#h.text]
+            let prefix = html.span(class: cls("text-text/75", indent))[#prefix]
+            let text = html.a(class: "hover:text-accent hover:underline underline-offset-4", href: "#" + id)[#h.text]
             let item-class = if h.level == 1 { "mt-5 first:mt-0" } else { "" }
             html.div(class: item-class)[
               #prefix#text
