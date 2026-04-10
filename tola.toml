@@ -4,17 +4,19 @@
 
 [site.info]
 title = "Voxell"
-author = "Voxell"
 email = "voxell.technologies@gmail.com"
 description = "Building the next generation of open-source ecosystem for makers."
 language = "en"
 url = "https://voxell.dev"
 
 [site.header]
-# icon = "assets/icons/favicon.ico"
+icon = "assets/icons/favicon.ico"
 # styles = ["assets/styles/custom.css"]
 # scripts = [{ path = "assets/scripts/app.js", defer = true }]
-elements = ['<meta name="darkreader-lock">']
+elements = [
+  '<meta name="darkreader-lock">',
+  '<script src="/js/theme.js"></script>',
+]
 
 [site.nav]
 spa = true
@@ -39,7 +41,8 @@ deps = ["templates", "utils", "components"]
 nested = [
   "assets/icons",
   "assets/styles",
-  "assets/fonts"
+  "assets/fonts",
+  "assets/js"
 ]
 
 [build.slug]

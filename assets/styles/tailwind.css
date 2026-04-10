@@ -2,12 +2,37 @@
 
 /* Tailwind CSS v4 configuration */
 @theme {
-    /* Monokai Pro color palette */
+    /* Monokai Pro dark palette (default) */
+    --color-red: #ff6188;
+    --color-orange: #fc9867;
+    --color-yellow: #ffd866;
+    --color-green: #a9dc76;
     --color-accent: #78dce8;
+    --color-purple: #ab9df2;
+
     --color-bg: #19181a;
     --color-surface: #2d2a2e;
     --color-text: #fcfcfa;
     --color-muted: #939293;
+    --color-subtle: #c1c0c0;
+}
+
+/* Light theme overrides */
+[data-theme="light"] {
+    --color-red: #c4224f;
+    --color-orange: #b55e1e;
+    --color-yellow: #9a7000;
+    --color-green: #5a8f25;
+    --color-accent: #0d7a8a;
+    --color-purple: #6248c8;
+
+    --color-bg: #fafafa;
+    --color-surface: #f0eeef;
+    --color-text: #2d2a2e;
+    --color-muted: #727072;
+    --color-subtle: #5b595c;
+
+    color-scheme: light;
 }
 
 /* Base styles */
@@ -51,3 +76,13 @@
         @apply bg-surface font-semibold;
     }
 }
+
+/* Social icons: white by default (dark theme); invert to black in light theme */
+[data-theme="light"] .social-icon img { filter: invert(1); }
+
+/* Theme toggle icon visibility */
+.icon-sun { display: inline; }
+.icon-moon { display: none; }
+
+[data-theme="light"] .icon-sun { display: none; }
+[data-theme="light"] .icon-moon { display: inline; }

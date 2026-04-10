@@ -3,15 +3,16 @@
 
 #import "/templates/tola.typ" as tola
 #import "/utils/tola.typ": cls
+#import "/components/ui.typ" as ui
 
 // ============================================================================
 // Configuration
 // ============================================================================
 
 #let colors = (
-  accent: "text-cyan-400",
-  code: "text-purple-300",
-  muted: "text-slate-400",
+  accent: "text-accent",
+  code: "text-purple",
+  muted: "text-muted",
 )
 
 // ============================================================================
@@ -52,7 +53,7 @@
   // Note: The inner <pre> tag already has background/padding styles from tailwind.css.
   // We wrap it in a div primarily for margins and the border.
   show raw.where(block: true): it => html.div(
-    class: "my-2 border border-white/10 rounded-lg",
+    class: "my-2 border border-text/10 rounded-lg",
   )[#it]
 
   // --------------------------------------------------------------------------
@@ -69,5 +70,30 @@
   // Render
   // --------------------------------------------------------------------------
 
+  html.nav(class: "border-b border-text/10")[
+    #html.div(class: "max-w-3xl mx-auto px-4 py-3 flex items-center justify-between")[
+      #html.a(class: "opacity-75 hover:opacity-100 transition-opacity", href: "/")[
+        #html.elem("img", attrs: (src: "/icons/voxell.svg", style: "height: 1.5rem; display: inline-block;"))
+      ]
+      #html.div(class: "flex items-center gap-6")[
+        #html.div[#ui.nav-link("/projects", [Projects])]
+        #html.div[
+          #html.a(
+            class: "text-muted hover:text-accent transition-colors",
+            href: "https://blog.voxell.dev",
+            target: "_blank",
+            rel: ("noopener", "noreferrer"),
+          )[Blog ↗]
+        ]
+        #html.elem("button", attrs: (
+          id: "theme-toggle",
+          class: "text-muted hover:text-accent transition-colors cursor-pointer bg-transparent border-0 p-0 leading-none",
+        ))[
+          #html.span(class: "icon-sun")[☀]
+          #html.span(class: "icon-moon")[☽]
+        ]
+      ]
+    ]
+  ]
   html.main(class: "max-w-3xl mx-auto px-4 py-8")[#body]
 }
