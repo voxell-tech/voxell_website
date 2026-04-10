@@ -61,21 +61,9 @@
   #html.h2(class: "text-2xl font-bold mb-8 text-center")[Featured Projects]
   #html.div(class: "grid grid-cols-1 sm:grid-cols-2 gap-4")[
     #for p in (
-      (
-        "motiongfx",
-        "https://github.com/voxell-tech/motiongfx",
-        313,
-        "Backend agnostic motion graphics creation framework.",
-        ("Rust",),
-      ),
-      (
-        "velyst",
-        "https://github.com/voxell-tech/velyst",
-        167,
-        "Interactive Typst content creator using Vello and Bevy.",
-        ("Rust", "Bevy", "Typst"),
-      ),
-    ) { ui.project-card(p.at(0), p.at(1), p.at(2), p.at(3), tags: p.at(4)) }
+      ("motiongfx", "voxell-tech/motiongfx", "Backend agnostic motion graphics creation framework.", ("Rust",)),
+      ("velyst", "voxell-tech/velyst", "Interactive Typst content creator using Vello and Bevy.", ("Rust", "Bevy", "Typst")),
+    ) { ui.project-card(p.at(0), "https://github.com/" + p.at(1), p.at(1), p.at(2)) }
   ]
   #html.div(class: "text-center mt-6")[
     #html.a(

@@ -46,25 +46,35 @@
   ]
 }
 
-/// Project card with name, star count, description, and tags
-#let project-card(name, url, stars, description, tags: ()) = html.a(
-  class: "block p-4 bg-surface rounded-lg border border-white/10 hover:border-accent/30 transition-colors",
-  href: url,
-  target: "_blank",
-  rel: ("noopener", "noreferrer"),
+/// Project card with name, shields.io badges, and description
+#let project-card(name, url, repo, description, crate: none) = html.div(
+  class: "flex flex-col p-4 bg-surface rounded-lg border border-white/10 hover:border-accent/30 transition-colors",
 )[
-  #html.div(class: "flex items-start justify-between mb-2")[
-    #html.span(class: "font-bold text-lg")[#name]
-    #html.span(
-      class: "text-sm text-muted whitespace-nowrap ml-2",
-    )[⭐ #str(stars)]
-  ]
-  #html.p(class: "text-muted text-sm mb-3")[#description]
-  #if tags.len() > 0 {
-    html.div(class: "flex flex-wrap gap-2")[
-      #for t in tags { tag(t) }
+  #html.a(
+    class: "font-bold text-lg hover:text-accent transition-colors mb-2",
+    href: url,
+    target: "_blank",
+    rel: ("noopener", "noreferrer"),
+  )[#name ↗]
+  #html.p(class: "text-muted text-sm mb-3 grow")[#description]
+  #let c = if crate != none { crate } else { name }
+  #let crates-url = "https://crates.io/crates/" + c
+  #html.div(class: "flex flex-wrap mt-auto")[
+    #html.a(href: url, target: "_blank", rel: ("noopener", "noreferrer"))[
+      #html.elem("img", attrs: (
+        src: "https://img.shields.io/github/stars/" + repo + "?style=flat&logo=github&label=",
+        alt: "GitHub stars",
+        height: "20",
+      ))
     ]
-  }
+    #html.a(href: crates-url, target: "_blank", rel: ("noopener", "noreferrer"))[
+      #html.elem("img", attrs: (
+        src: "https://img.shields.io/crates/v/" + c + "?style=flat&logo=rust&label=",
+        alt: "crates.io version",
+        height: "20",
+      ))
+    ]
+  ]
 ]
 
 /// Side-by-side showcase card: source code + rendered output.

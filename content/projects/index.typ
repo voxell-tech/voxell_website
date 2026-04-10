@@ -6,70 +6,75 @@
 #let projects = (
   (
     name: "motiongfx",
-    url: "https://github.com/voxell-tech/motiongfx",
-    stars: 313,
+    repo: "voxell-tech/motiongfx",
     desc: "Backend agnostic motion graphics creation framework.",
-    tags: ("Rust",),
   ),
   (
     name: "velyst",
-    url: "https://github.com/voxell-tech/velyst",
-    stars: 167,
+    repo: "voxell-tech/velyst",
     desc: "Interactive Typst content creator using Vello and Bevy.",
-    tags: ("Rust", "Bevy", "Typst"),
   ),
   (
     name: "bevy_motion_matching",
-    url: "https://github.com/voxell-tech/bevy_motion_matching",
-    stars: 51,
+    repo: "voxell-tech/bevy_motion_matching",
     desc: "Motion matching enables characters to smoothly transition between animations without hand-crafted state machines.",
-    tags: ("Rust", "Bevy"),
   ),
   (
     name: "xad",
-    url: "https://github.com/voxell-tech/xad",
-    stars: 8,
+    repo: "voxell-tech/xad",
     desc: "A modern precision modeling software.",
-    tags: ("Rust",),
-  ),
-  (
-    name: "field_path",
-    url: "https://github.com/voxell-tech/field_path",
-    stars: 7,
-    desc: "Type-safe, no-std field access and reflection utilities.",
-    tags: ("Rust",),
-  ),
-  (
-    name: "rectree",
-    url: "https://github.com/voxell-tech/rectree",
-    stars: 5,
-    desc: "Representing user interfaces using a rectangle tree.",
-    tags: ("Rust",),
   ),
   (
     name: "fynix",
-    url: "https://github.com/voxell-tech/fynix",
-    stars: 4,
+    repo: "voxell-tech/fynix",
     desc: "A composable, declarative UI framework.",
-    tags: ("Rust",),
+  ),
+  (
+    name: "cornix",
+    repo: "voxell-tech/cornix",
+    desc: "Matter over Thread + Bevy ECS.",
+  ),
+)
+
+#let foundational = (
+  (
+    name: "field_path",
+    repo: "voxell-tech/field_path",
+    desc: "Type-safe, no-std field access and reflection utilities.",
+  ),
+  (
+    name: "rectree",
+    repo: "voxell-tech/rectree",
+    desc: "Representing user interfaces using a rectangle tree.",
   ),
   (
     name: "sparse_map",
-    url: "https://github.com/voxell-tech/sparse_map",
-    stars: 2,
+    repo: "voxell-tech/sparse_map",
     desc: "A sparse map with stable generational keys.",
-    tags: ("Rust",),
+  ),
+  (
+    name: "typeslot",
+    repo: "voxell-tech/typeslot",
+    desc: "Statically assigned slot indices for types, grouped by a marker type.",
   ),
 )
 
 = Projects
 
+#html.div(class: "grid grid-cols-1 sm:grid-cols-2 gap-4")[
+  #for p in projects {
+    ui.project-card(p.name, "https://github.com/" + p.repo, p.repo, p.desc)
+  }
+]
+
+== Foundational
+
 #html.p(class: "text-muted mb-8")[
-  Open-source tools and libraries built with Rust for game development and creative coding.
+  Low-level building blocks and utilities that power the projects above.
 ]
 
 #html.div(class: "grid grid-cols-1 sm:grid-cols-2 gap-4")[
-  #for p in projects {
-    ui.project-card(p.name, p.url, p.stars, p.desc, tags: p.tags)
+  #for p in foundational {
+    ui.project-card(p.name, "https://github.com/" + p.repo, p.repo, p.desc)
   }
 ]
