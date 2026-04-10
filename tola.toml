@@ -1,0 +1,61 @@
+# ==============================================================================
+# Tola Configuration
+# ==============================================================================
+
+[site.info]
+title = "Voxell"
+author = "Voxell"
+email = "voxell.technologies@gmail.com"
+description = "Building the next generation of open-source ecosystem for makers."
+language = "en"
+url = "https://voxell.dev"
+
+[site.header]
+# icon = "assets/icons/favicon.ico"
+# styles = ["assets/styles/custom.css"]
+# scripts = [{ path = "assets/scripts/app.js", defer = true }]
+elements = ['<meta name="darkreader-lock">']
+
+[site.nav]
+spa = true
+
+[site.seo]
+auto_og = true
+
+[site.seo.feed]
+enable = false
+
+[site.seo.sitemap]
+enable = false
+path = "sitemap.xml"
+
+[build]
+content = "content"
+output = "public"
+minify = true
+deps = ["templates", "utils", "components"]
+
+[build.assets]
+nested = [
+  "assets/icons",
+  "assets/styles",
+  "assets/fonts"
+]
+
+[build.slug]
+path = "safe"
+fragment = "full"
+separator = "dash"
+case = "lower"
+
+# Tailwind CSS - enabled by default in this template
+# Make sure tailwindcss is installed: npm install -g tailwindcss
+[build.hooks.css]
+enable = true
+path = "assets/styles/tailwind.css"
+command = ["tailwindcss"]
+
+[serve]
+interface = "127.0.0.1"
+port = 5277
+watch = true
