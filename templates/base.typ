@@ -4,6 +4,7 @@
 #import "/templates/tola.typ" as tola
 #import "/utils/tola.typ": cls
 #import "/components/ui.typ" as ui
+#import "@tola/current:0.0.0": current-permalink
 
 // ============================================================================
 // Configuration
@@ -76,7 +77,14 @@
         #html.elem("img", attrs: (src: "/icons/voxell.svg", style: "height: 1.5rem; display: inline-block;"))
       ]
       #html.div(class: "flex items-center gap-6")[
-        #html.div[#ui.nav-link("/projects", [Projects])]
+        #html.div[#html.a(
+          class: if current-permalink != none and current-permalink.starts-with("/projects") {
+            "text-accent transition-colors"
+          } else {
+            "text-muted hover:text-accent transition-colors"
+          },
+          href: "/projects",
+        )[Projects]]
         #html.div[
           #html.a(
             class: "text-muted hover:text-accent transition-colors",
