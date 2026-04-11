@@ -89,8 +89,8 @@
           id: "theme-toggle",
           class: "text-muted hover:text-accent transition-colors cursor-pointer bg-transparent border-0 p-0 leading-none",
         ))[
-          #html.span(class: "icon-sun")[☀]
-          #html.span(class: "icon-moon")[☽]
+          #html.span(class: "icon-sun")[#html.elem("img", attrs: (src: "/icons/sun.svg", style: "height: 1.25rem; display: inline-block;"))]
+          #html.span(class: "icon-moon")[#html.elem("img", attrs: (src: "/icons/moon.svg", style: "height: 1.25rem; display: inline-block;"))]
         ]
       ]
     ]

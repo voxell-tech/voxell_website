@@ -11,6 +11,7 @@
   // custom html head
   // `m`: page metadata
   head: m => [
+    #html.elem("meta", attrs: (name: "viewport", content: "width=device-width, initial-scale=1"))
     #og-tags(
       title: m.title,
       description: m.summary,

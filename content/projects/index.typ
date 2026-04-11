@@ -15,9 +15,9 @@
     desc: "Interactive Typst content creator using Vello and Bevy.",
   ),
   (
-    name: "bevy_motion_matching",
-    repo: "voxell-tech/bevy_motion_matching",
-    desc: "Motion matching enables characters to smoothly transition between animations without hand-crafted state machines.",
+    name: "fynix",
+    repo: "voxell-tech/fynix",
+    desc: "A composable, declarative UI framework.",
   ),
   (
     name: "xad",
@@ -25,9 +25,9 @@
     desc: "A modern precision modeling software.",
   ),
   (
-    name: "fynix",
-    repo: "voxell-tech/fynix",
-    desc: "A composable, declarative UI framework.",
+    name: "bevy_motion_matching",
+    repo: "voxell-tech/bevy_motion_matching",
+    desc: "Motion matching enables characters to smoothly transition between animations without hand-crafted state machines.",
   ),
   (
     name: "cornix",
