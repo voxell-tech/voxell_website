@@ -87,6 +87,15 @@
         )[Projects]]
         #html.div[
           #html.a(
+            class: if current-permalink != none and current-permalink.starts-with("/roadmap") {
+              "text-accent transition-colors"
+            } else {
+              "text-muted hover:text-accent transition-colors"
+            },
+            href: "/roadmap",
+          )[Roadmap]]
+        #html.div[
+          #html.a(
             class: "text-muted hover:text-accent transition-colors",
             href: "https://blog.voxell.dev",
             target: "_blank",
@@ -97,8 +106,14 @@
           id: "theme-toggle",
           class: "text-muted hover:text-accent transition-colors cursor-pointer bg-transparent border-0 p-0 leading-none",
         ))[
-          #html.span(class: "icon-sun")[#html.elem("img", attrs: (src: "/icons/sun.svg", style: "height: 1.25rem; display: inline-block;"))]
-          #html.span(class: "icon-moon")[#html.elem("img", attrs: (src: "/icons/moon.svg", style: "height: 1.25rem; display: inline-block;"))]
+          #html.span(class: "icon-sun")[#html.elem("img", attrs: (
+            src: "/icons/sun.svg",
+            style: "height: 1.25rem; display: inline-block;",
+          ))]
+          #html.span(class: "icon-moon")[#html.elem("img", attrs: (
+            src: "/icons/moon.svg",
+            style: "height: 1.25rem; display: inline-block;",
+          ))]
         ]
       ]
     ]
