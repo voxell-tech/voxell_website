@@ -34,7 +34,7 @@
       ),
       (
         "Reactivity (Signals)",
-        "planned",
+        "active",
         "Implementing field signals and reactive scopes.",
         ("Reactivity", "State"),
       ),
@@ -73,10 +73,22 @@
         ("Math", "Core"),
       ),
       (
+        "Node Graph Implementation",
+        "active",
+        "Asset/scene representation format to serialize/deserialize files.",
+        ("Graph", "Core"),
+      ),
+      (
         "Constraint Solver",
         "active",
         "Precise geometric relationships, dimensional limits and parametric links.",
         ("Logic", "UX"),
+      ),
+      (
+        "Direct Slider Integration",
+        "planned",
+        "Able to export SDF to STEP files & being able to slice the SDFs directly.",
+        ("Manufacturing", "Export", "Interoperability"),
       ),
     ),
   ),
@@ -92,7 +104,7 @@
       (
         "Typst Support",
         "active",
-        "Native Typst support will bring typeset content (equations, charts, structured text) into MotionGfx",
+        "Native Typst support will bring typeset content (equations, charts, rich text) into MotionGfx",
         ("Feature",),
       ),
       (
