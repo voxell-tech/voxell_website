@@ -92,8 +92,8 @@
             } else {
               "text-muted hover:text-accent transition-colors"
             },
-            href: "/roadmap",
-          )[Roadmap]]
+            href: "/roadmaps",
+          )[Roadmaps]]
         #html.div[
           #html.a(
             class: "text-muted hover:text-accent transition-colors",
