@@ -48,9 +48,6 @@
       #html.div(class: "mb-10")[
         #html.div(class: "flex items-center gap-3 mb-3")[
           #html.span(
-            class: "text-[10px] font-bold uppercase tracking-widest text-muted px-2 py-1 rounded-md border border-text/10 bg-surface",
-          )[#project.category]
-          #html.span(
             class: "text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded border " + status-style,
           )[#project.status]
         ]
@@ -64,21 +61,13 @@
           )[Repository ->]
         ]
 
-        #html.p(class: "text-muted text-lg leading-relaxed mb-6")[#project.desc]
-
-        #html.div(class: "flex flex-wrap gap-2")[
-          #for tag in project.tags {
-            html.span(
-              class: "text-[10px] font-bold uppercase tracking-wider text-muted px-2 py-1 rounded-full border border-text/10 bg-background/80",
-            )[#tag]
-          }
-        ]
+        #html.p(class: "text-muted text-lg leading-relaxed")[#project.desc]
       ]
 
       // Milestone Cards Grid
       #html.div(class: "grid grid-cols-1 md:grid-cols-2 gap-6 mt-8")[
         #for m in project.milestones {
-          let (m-title, m-status, desc, tags) = m
+          let (m-title, m-status, desc) = m
 
           let badge-class = if m-status == "done" {
             "text-green text-[10px] px-3 py-1 rounded-full bg-green/10 border border-green/20 font-bold uppercase inline-block"
@@ -88,7 +77,11 @@
             "text-muted text-[10px] px-3 py-1 rounded-full bg-surface border border-text/10 font-bold uppercase inline-block"
           }
 
-          let label = if m-status == "done" { "Completed" } else if m-status == "active" { "In progress" } else {
+          let label = if m-status == "done" {
+            "Completed"
+          } else if m-status == "active" {
+            "In progress"
+          } else {
             "Planned"
           }
 
@@ -96,7 +89,6 @@
           html.div(
             class: "flex flex-col p-6 rounded-xl border border-text/10 bg-surface/30 hover:bg-surface hover:border-text/20 hover:shadow-md transition-all duration-300 group",
           )[
-
             // Card Header
             #html.div(class: "mb-4")[
               #html.span(class: badge-class)[#label]
@@ -104,16 +96,7 @@
 
             // Card Body
             #html.h4(class: "text-lg font-bold text-text group-hover:text-accent transition-colors mb-2")[#m-title]
-            #html.p(class: "text-muted text-sm leading-relaxed mb-6 flex-grow")[#desc]
-
-            // Card Footer
-            #html.div(class: "flex flex-wrap gap-2 mt-auto pt-4 border-t border-text/5")[
-              #for tag in tags {
-                html.span(
-                  class: "text-[10px] uppercase tracking-wider text-muted/80 px-2 py-1 rounded-full border border-text/10 bg-background/50 font-bold",
-                )[#tag]
-              }
-            ]
+            #html.p(class: "text-muted text-sm leading-relaxed")[#desc]
           ]
         }
       ]
