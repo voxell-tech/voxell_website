@@ -26,7 +26,7 @@
     #for project in projects {
       html.a(
         href: "#" + project.id,
-        class: "text-sm font-bold text-muted hover:text-accent whitespace-nowrap transition-colors tracking-wide px-2 py-1 rounded hover:bg-surface/50",
+        class: "roadmap-tab text-sm font-bold text-muted hover:text-accent whitespace-nowrap transition-colors tracking-wide px-2 py-1 rounded hover:bg-surface/50",
       )[#project.title]
     }
   ]
@@ -43,7 +43,14 @@
       "text-green border-green/20 bg-green/10"
     }
 
-    html.div(id: project.id, class: "scroll-mt-24 mb-24")[
+    html.elem(
+      "div",
+      attrs: (
+        id: project.id,
+        class: "roadmap-page scroll-mt-24 mb-24",
+        style: "display:none",
+      ),
+    )[
       // Project Header Block
       #html.div(class: "mb-10")[
         #html.div(class: "flex items-center gap-3 mb-3")[
@@ -131,3 +138,6 @@
     ]
   ]
 ]
+
+// Tab routing script
+#html.script(read("../.././assets/js/roadmap_tabs.js"))
