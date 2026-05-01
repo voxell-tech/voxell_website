@@ -2,41 +2,13 @@
     const grids = document.querySelectorAll('.issues-grid[data-repo]');
     if (!grids.length) return;
 
-    const loadScript = (src) => {
+    const markedReady = (() => {
         const el = document.createElement('script');
-        el.src = src;
+        el.src = 'https://cdn.jsdelivr.net/npm/marked/marked.min.js';
         const ready = new Promise(resolve => { el.onload = resolve; el.onerror = resolve; });
         document.head.appendChild(el);
         return ready;
-    };
-
-    const markedReady = loadScript('https://cdn.jsdelivr.net/npm/marked/marked.min.js');
-    const hljsReady = loadScript('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js');
-
-    const hljsStyle = document.createElement('style');
-    hljsStyle.textContent = `
-        .hljs { background: var(--color-surface); color: var(--color-text); }
-        .hljs-comment, .hljs-quote { color: var(--color-muted); font-style: italic; }
-        .hljs-keyword, .hljs-selector-tag, .hljs-deletion { color: var(--color-red); }
-        .hljs-string, .hljs-addition, .hljs-meta .hljs-string { color: var(--color-yellow); }
-        .hljs-number, .hljs-literal, .hljs-regexp { color: var(--color-purple); }
-        .hljs-built_in, .hljs-class .hljs-title, .hljs-title.class_ { color: var(--color-accent); }
-        .hljs-title, .hljs-title.function_ { color: var(--color-green); }
-        .hljs-type, .hljs-meta { color: var(--color-orange); }
-        .hljs-attr, .hljs-attribute, .hljs-variable, .hljs-template-variable { color: var(--color-accent); }
-        .hljs-symbol, .hljs-bullet { color: var(--color-red); }
-        .hljs-emphasis { font-style: italic; }
-        .hljs-strong { font-weight: bold; }
-    `;
-    document.head.appendChild(hljsStyle);
-
-    const renderMarkdown = (text, container) => {
-        container.innerHTML = typeof marked !== 'undefined'
-            ? marked.parse(text)
-            : `<p>${text}</p>`;
-        if (typeof hljs !== 'undefined')
-            container.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
-    };
+    })();
 
     // Modal
     const modal = document.createElement('div');
@@ -50,7 +22,7 @@
                     <h2 id="modal-title" class="text-2xl font-extrabold text-text"></h2>
                 </div>
                 <div class="flex items-center gap-3 shrink-0 mt-1">
-                    <a id="modal-link" href="#" target="_blank" class="text-xs font-mono text-muted hover:text-accent underline underline-offset-4 transition-colors">View on GitHub</a>
+                    <a id="modal-link" href="#" target="_blank" class="text-xs font-mono text-muted hover:text-accent underline underline-offset-4 transition-colors">View on GitHub ↗</a>
                     <button id="modal-close" class="text-muted hover:text-text transition-colors text-lg leading-none cursor-pointer">✕</button>
                 </div>
             </div>
@@ -81,7 +53,7 @@
             : issue.title;
         document.getElementById('modal-badges').innerHTML = badgesHtml(issue.labels);
         document.getElementById('modal-link').href = issue.html_url;
-        renderMarkdown(issue.body || '*No description provided.*', document.getElementById('modal-body'));
+        SyntaxHighlight.renderMarkdown(issue.body || '*No description provided.*', document.getElementById('modal-body'));
         modal.classList.remove('hidden');
     };
 
@@ -100,7 +72,7 @@
             <div class="flex flex-wrap gap-2 mb-4">${badgesHtml(issue.labels)}</div>
             <h4 class="text-lg font-bold text-text group-hover:text-accent transition-colors mb-2">${titleHtml}</h4>
         `;
-        renderMarkdown(truncated, preview);
+        SyntaxHighlight.renderMarkdown(truncated, preview);
         card.appendChild(preview);
 
         card.addEventListener('click', () => openModal(issue));
@@ -136,7 +108,7 @@
             cachedFetch(`https://api.github.com/repos/voxell-tech/${repo}`, `gh-repo-${repo}`),
             cachedFetch(`https://api.github.com/repos/voxell-tech/${repo}/issues?state=open&per_page=50`, `gh-issues-${repo}`),
             markedReady,
-            hljsReady,
+            SyntaxHighlight.ready,
         ]).then(([repoInfo, issues]) => {
             if (descEl) descEl.textContent = repoInfo.description || '';
 
