@@ -43,7 +43,7 @@
     modal.className = 'fixed inset-0 z-[200] flex items-center justify-center p-4 hidden';
     modal.innerHTML = `
         <div id="modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
-        <div class="relative bg-background border border-text/10 rounded-2xl shadow-2xl w-full max-w-3xl max-h-[85vh] flex flex-col overflow-hidden">
+        <div class="relative bg-bg border border-text/10 rounded-2xl shadow-2xl w-full max-w-3xl max-h-[85vh] flex flex-col overflow-hidden">
             <div class="flex items-start justify-between p-6 border-b border-text/10 gap-4">
                 <div class="min-w-0">
                     <div id="modal-badges" class="flex flex-wrap gap-2 mb-3"></div>
@@ -54,7 +54,7 @@
                     <button id="modal-close" class="text-muted hover:text-text transition-colors text-lg leading-none cursor-pointer">✕</button>
                 </div>
             </div>
-            <div id="modal-body" class="overflow-y-auto p-6 markdown-body text-muted text-sm leading-relaxed"></div>
+            <div id="modal-body" class="overflow-y-auto p-6 markdown-body text-text text-sm leading-relaxed"></div>
         </div>
     `;
     document.body.appendChild(modal);
