@@ -77,6 +77,20 @@
     }
 }
 
+/* Markdown rendered content */
+.markdown-body {
+    h1, h2, h3, h4, h5, h6 { @apply font-bold text-text mt-6 mb-2; }
+    h1 { @apply text-2xl; }
+    h2 { @apply text-xl; }
+    h3 { @apply text-lg; }
+    p { @apply mb-3; }
+    ul { @apply list-disc pl-5 mb-3 space-y-1; }
+    ol { @apply list-decimal pl-5 mb-3 space-y-1; }
+    blockquote { @apply border-l-4 border-text/20 pl-4 text-muted/70 mb-3 italic; }
+    hr { @apply border-text/10 my-4; }
+    img { @apply max-w-full rounded-lg my-4; }
+}
+
 /* Social icons: white by default (dark theme); invert to black in light theme */
 [data-theme="light"] .social-icon img { filter: invert(1); }
 

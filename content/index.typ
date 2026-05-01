@@ -26,6 +26,13 @@
 
     #html.a(
       class: "social-icon opacity-75 hover:opacity-100 transition-opacity",
+      href: "https://discord.gg/Mhnyp6VYEQ",
+      target: "_blank",
+      rel: ("noopener", "noreferrer"),
+    )[#image("/assets/icons/discord.svg", height: 20pt)]
+
+    #html.a(
+      class: "social-icon opacity-75 hover:opacity-100 transition-opacity",
       href: "https://youtube.com/@voxelltech",
       target: "_blank",
       rel: ("noopener", "noreferrer"),
@@ -62,7 +69,12 @@
   #html.div(class: "grid grid-cols-1 sm:grid-cols-2 gap-4")[
     #for p in (
       ("motiongfx", "voxell-tech/motiongfx", "Backend agnostic motion graphics creation framework.", ("Rust",)),
-      ("velyst", "voxell-tech/velyst", "Interactive Typst content creator using Vello and Bevy.", ("Rust", "Bevy", "Typst")),
+      (
+        "velyst",
+        "voxell-tech/velyst",
+        "Interactive Typst content creator using Vello and Bevy.",
+        ("Rust", "Bevy", "Typst"),
+      ),
     ) { ui.project-card(p.at(0), "https://github.com/" + p.at(1), p.at(1), p.at(2)) }
   ]
   #html.div(class: "text-center mt-6")[
