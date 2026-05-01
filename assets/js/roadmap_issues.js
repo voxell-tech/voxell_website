@@ -58,21 +58,19 @@
     };
 
     const renderCard = (issue) => {
-        const body = issue.body || '';
-        const truncated = body.length > 240 ? body.slice(0, 240) + '…' : body;
-
         const card = document.createElement('div');
-        card.className = 'flex flex-col p-6 rounded-xl border border-text/10 bg-surface/30 hover:bg-surface hover:border-text/20 hover:shadow-md transition-all duration-300 group cursor-pointer';
+        card.className = 'flex flex-col h-56 p-6 rounded-xl border border-text/10 bg-surface/30 hover:bg-surface hover:border-text/20 hover:shadow-md transition-all duration-300 group cursor-pointer overflow-hidden';
 
         const preview = document.createElement('div');
-        preview.className = 'markdown-body text-muted text-sm leading-relaxed';
+        preview.className = 'markdown-body text-muted text-sm leading-relaxed flex-1 overflow-hidden';
+        preview.style.cssText = 'mask-image: linear-gradient(to bottom, black 20%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 100%)';
 
         const titleHtml = typeof marked !== 'undefined' ? marked.parseInline(issue.title) : issue.title;
         card.innerHTML = `
-            <div class="flex flex-wrap gap-2 mb-4">${badgesHtml(issue.labels)}</div>
-            <h4 class="text-lg font-bold text-text group-hover:text-accent transition-colors mb-2">${titleHtml}</h4>
+            <div class="flex flex-wrap gap-2 mb-4 shrink-0">${badgesHtml(issue.labels)}</div>
+            <h4 class="text-lg font-bold text-text group-hover:text-accent transition-colors mb-2 shrink-0">${titleHtml}</h4>
         `;
-        SyntaxHighlight.renderMarkdown(truncated, preview);
+        SyntaxHighlight.renderMarkdown(issue.body || '', preview);
         card.appendChild(preview);
 
         card.addEventListener('click', () => openModal(issue));

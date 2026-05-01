@@ -59,9 +59,6 @@
         ),
       )[]
 
-      #html.div(
-        class: "h-px w-full bg-gradient-to-r from-text/10 via-text/5 to-transparent mt-16",
-      )[]
     ]
   }
 ]
