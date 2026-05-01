@@ -76,7 +76,9 @@
     ).join('');
 
     const openModal = (issue) => {
-        document.getElementById('modal-title').textContent = issue.title;
+        document.getElementById('modal-title').innerHTML = typeof marked !== 'undefined'
+            ? marked.parseInline(issue.title)
+            : issue.title;
         document.getElementById('modal-badges').innerHTML = badgesHtml(issue.labels);
         document.getElementById('modal-link').href = issue.html_url;
         renderMarkdown(issue.body || '*No description provided.*', document.getElementById('modal-body'));
@@ -93,9 +95,10 @@
         const preview = document.createElement('div');
         preview.className = 'markdown-body text-muted text-sm leading-relaxed';
 
+        const titleHtml = typeof marked !== 'undefined' ? marked.parseInline(issue.title) : issue.title;
         card.innerHTML = `
             <div class="flex flex-wrap gap-2 mb-4">${badgesHtml(issue.labels)}</div>
-            <h4 class="text-lg font-bold text-text group-hover:text-accent transition-colors mb-2">${issue.title}</h4>
+            <h4 class="text-lg font-bold text-text group-hover:text-accent transition-colors mb-2">${titleHtml}</h4>
         `;
         renderMarkdown(truncated, preview);
         card.appendChild(preview);
