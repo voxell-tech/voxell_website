@@ -94,5 +94,7 @@
 
 // Tab routing script
 #html.script(read("../.././assets/js/roadmap_tabs.js"))
+// Syntax highlighting (Shiki + Monokai Pro)
+#html.script(read("../.././assets/js/syntax.js"))
 // GitHub issues fetcher
 #html.script(read("../.././assets/js/roadmap_issues.js"))
