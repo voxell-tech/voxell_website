@@ -62,14 +62,21 @@
   #html.div(class: "flex flex-wrap mt-auto")[
     #html.a(href: url, target: "_blank", rel: ("noopener", "noreferrer"))[
       #html.elem("img", attrs: (
-        src: "https://img.shields.io/github/stars/" + repo + "?style=flat&logo=github&label=",
+        src: "https://img.shields.io/github/stars/"
+          + repo
+          + "?style=flat&logo=github&label",
         alt: "GitHub stars",
         height: "20",
       ))
     ]
-    #html.a(href: crates-url, target: "_blank", rel: ("noopener", "noreferrer"))[
+    #html.a(href: crates-url, target: "_blank", rel: (
+      "noopener",
+      "noreferrer",
+    ))[
       #html.elem("img", attrs: (
-        src: "https://img.shields.io/crates/v/" + c + "?style=flat&logo=rust&label=",
+        src: "https://img.shields.io/crates/v/"
+          + c
+          + "?style=flat&logo=rust&label",
         alt: "crates.io version",
         height: "20",
       ))
