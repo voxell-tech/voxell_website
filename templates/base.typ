@@ -5,6 +5,9 @@
 #import "/utils/tola.typ": cls
 #import "/components/ui.typ" as ui
 #import "@tola/current:0.0.0": current-permalink
+#import "/shared/components/nav.typ": nav
+#import "/shared/components/footer.typ": footer
+#import "/shared/links.typ": links
 
 // ============================================================================
 // Configuration
@@ -71,52 +74,15 @@
   // Render
   // --------------------------------------------------------------------------
 
-  html.nav(class: "border-b border-text/10")[
-    #html.div(class: "max-w-3xl mx-auto px-4 py-3 flex items-center justify-between")[
-      #html.a(class: "opacity-75 hover:opacity-100 transition-opacity", href: "/")[
-        #html.elem("img", attrs: (src: "/icons/voxell.svg", style: "height: 1.5rem; display: inline-block;"))
-      ]
-      #html.div(class: "flex items-center gap-6")[
-        #html.div[#html.a(
-          class: if current-permalink != none and current-permalink.starts-with("/projects") {
-            "text-accent transition-colors"
-          } else {
-            "text-muted hover:text-accent transition-colors"
-          },
-          href: "/projects",
-        )[Projects]]
-        #html.div[
-          #html.a(
-            class: if current-permalink != none and current-permalink.starts-with("/roadmap") {
-              "text-accent transition-colors"
-            } else {
-              "text-muted hover:text-accent transition-colors"
-            },
-            href: "/roadmaps",
-          )[Roadmaps]]
-        #html.div[
-          #html.a(
-            class: "text-muted hover:text-accent transition-colors",
-            href: "https://blog.voxell.dev",
-            target: "_blank",
-            rel: ("noopener", "noreferrer"),
-          )[Blog ↗]
-        ]
-        #html.elem("button", attrs: (
-          id: "theme-toggle",
-          class: "text-muted hover:text-accent transition-colors cursor-pointer bg-transparent border-0 p-0 leading-none",
-        ))[
-          #html.span(class: "icon-sun")[#html.elem("img", attrs: (
-            src: "/icons/sun.svg",
-            style: "height: 1.25rem; display: inline-block;",
-          ))]
-          #html.span(class: "icon-moon")[#html.elem("img", attrs: (
-            src: "/icons/moon.svg",
-            style: "height: 1.25rem; display: inline-block;",
-          ))]
-        ]
-      ]
-    ]
-  ]
+  nav(links: (
+    (label: [Projects], href: "/projects", match: "/projects"),
+    (label: [Roadmaps], href: "/roadmaps", match: "/roadmap"),
+    (label: [Blog ↗], href: links.blog, external: true),
+  ))
   html.main(class: "max-w-3xl mx-auto px-4 py-8")[#body]
+
+  // Footer on sub-pages only (not the home page)
+  if current-permalink != none and current-permalink != "/" {
+    footer()
+  }
 }

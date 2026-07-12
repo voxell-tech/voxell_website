@@ -1,80 +1,23 @@
 @import 'tailwindcss';
 
-/* Tailwind CSS v4 configuration */
+/* Shared theme, base styles, theme-toggle + social-icon CSS. */
+@source "../../shared";
+@import "../../shared/styles.css";
+
+/* Site-specific palette additions (Monokai Pro accents) — override/extend the
+   shared @theme. */
 @theme {
-    /* Monokai Pro dark palette (default) */
     --color-red: #ff6188;
     --color-orange: #fc9867;
     --color-yellow: #ffd866;
     --color-green: #a9dc76;
-    --color-accent: #78dce8;
-    --color-purple: #ab9df2;
-
-    --color-bg: #19181a;
-    --color-surface: #2d2a2e;
-    --color-text: #fcfcfa;
-    --color-muted: #939293;
-    --color-subtle: #c1c0c0;
 }
 
-/* Light theme overrides */
 [data-theme="light"] {
     --color-red: #c4224f;
     --color-orange: #b55e1e;
     --color-yellow: #9a7000;
     --color-green: #5a8f25;
-    --color-accent: #0d7a8a;
-    --color-purple: #6248c8;
-
-    --color-bg: #fafafa;
-    --color-surface: #f0eeef;
-    --color-text: #2d2a2e;
-    --color-muted: #727072;
-    --color-subtle: #5b595c;
-
-    color-scheme: light;
-}
-
-/* Base styles */
-@layer base {
-    html {
-        @apply scroll-smooth bg-bg text-text;
-        color-scheme: dark;
-    }
-
-    body {
-        @apply antialiased min-h-screen;
-    }
-
-    a {
-        @apply text-accent hover:opacity-80 transition-opacity;
-    }
-
-    code {
-        @apply bg-surface px-1.5 py-0.5 rounded-sm text-sm;
-    }
-
-    pre {
-        @apply bg-surface p-2 rounded-sm overflow-x-auto;
-    }
-
-    pre code {
-        @apply bg-transparent p-0;
-    }
-
-    /* Table styles */
-    table {
-        @apply w-full border-collapse border-4 border-gray-600 my-4;
-    }
-
-    th,
-    td {
-        @apply border-4 border-gray-600 p-2 text-left;
-    }
-
-    th {
-        @apply bg-surface font-semibold;
-    }
 }
 
 /* Markdown rendered content */
@@ -90,13 +33,3 @@
     hr { @apply border-text/10 my-4; }
     img { @apply max-w-full rounded-lg my-4; }
 }
-
-/* Social icons: white by default (dark theme); invert to black in light theme */
-[data-theme="light"] .social-icon img { filter: invert(1); }
-
-/* Theme toggle icon visibility */
-.icon-sun { display: inline; }
-.icon-moon { display: none; }
-
-[data-theme="light"] .icon-sun { display: none; }
-[data-theme="light"] .icon-moon { display: inline; }

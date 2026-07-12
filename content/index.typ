@@ -7,57 +7,31 @@
 // Hero
 #html.div(class: "text-center py-20 px-5")[
   #html.a(class: "inline-block mb-1", href: "/")[
-    #image("/assets/icons/voxell.svg", height: 60pt)
+    #html.elem("img", attrs: (src: "/icons/voxell.svg", style: "height: 5rem; display: inline-block;"))
   ]
 
   #html.h1(class: "text-4xl font-bold mb-2")[Voxell]
 
   #html.p(class: "text-muted text-lg mb-8")[
-    Building the next generation of open-source ecosystem for makers.
+    Building tools to solve *real*, *challenging* problems.
   ]
 
+  #let social-icon(href, icon) = html.a(
+    class: "social-link",
+    href: href,
+    target: "_blank",
+    rel: ("noopener", "noreferrer"),
+  )[#html.elem("span", attrs: (class: "social-icon", style: "--icon: url('/icons/" + icon + "'); width: 2rem; height: 2rem"))]
+
   #html.div(class: "flex flex-wrap justify-center gap-4")[
-    #html.a(
-      class: "social-icon opacity-75 hover:opacity-100 transition-opacity",
-      href: "https://github.com/voxell-tech",
-      target: "_blank",
-      rel: ("noopener", "noreferrer"),
-    )[#image("/assets/icons/github.svg", height: 20pt)]
-
-    #html.a(
-      class: "social-icon opacity-75 hover:opacity-100 transition-opacity",
-      href: "https://discord.gg/Mhnyp6VYEQ",
-      target: "_blank",
-      rel: ("noopener", "noreferrer"),
-    )[#image("/assets/icons/discord.svg", height: 20pt)]
-
-    #html.a(
-      class: "social-icon opacity-75 hover:opacity-100 transition-opacity",
-      href: "https://youtube.com/@voxelltech",
-      target: "_blank",
-      rel: ("noopener", "noreferrer"),
-    )[#image("/assets/icons/youtube.svg", height: 20pt)]
-
-    #html.a(
-      class: "social-icon opacity-75 hover:opacity-100 transition-opacity",
-      href: "https://www.linkedin.com/company/voxelltech",
-      target: "_blank",
-      rel: ("noopener", "noreferrer"),
-    )[#image("/assets/icons/linkedin.svg", height: 20pt)]
-
-    #html.a(
-      class: "social-icon opacity-75 hover:opacity-100 transition-opacity",
-      href: "mailto:voxell.technologies@gmail.com",
-      target: "_blank",
-      rel: ("noopener", "noreferrer"),
-    )[#image("/assets/icons/mail.svg", height: 20pt)]
-
-    #html.a(
-      class: "social-icon opacity-75 hover:opacity-100 transition-opacity",
-      href: "https://nixon-voxell.itch.io",
-      target: "_blank",
-      rel: ("noopener", "noreferrer"),
-    )[#image("/assets/icons/itchio.svg", height: 20pt)]
+    #social-icon("https://opencollective.com/voxell", "opencollective.svg")
+    #social-icon("https://github.com/voxell-tech", "github.svg")
+    #social-icon("https://discord.gg/Mhnyp6VYEQ", "discord.svg")
+    #social-icon("https://youtube.com/@voxelltech", "youtube.svg")
+    #social-icon("https://www.linkedin.com/company/voxelltech", "linkedin.svg")
+    #social-icon("https://reddit.com/r/voxell", "reddit.svg")
+    #social-icon("https://instagram.com/voxelltech", "instagram.svg")
+    #social-icon("mailto:voxell.technologies@gmail.com", "gmail.svg")
   ]
 ]
 

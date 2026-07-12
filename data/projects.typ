@@ -1,8 +1,8 @@
 #let projects = (
   (
-    id: "fynix",
-    title: "Fynix",
-    link: "https://github.com/voxell-tech/fynix",
+    id: "motiongfx",
+    title: "MotionGfx",
+    link: "https://github.com/voxell-tech/motiongfx",
   ),
   (
     id: "velyst",
@@ -15,8 +15,8 @@
     link: "https://github.com/voxell-tech/xad",
   ),
   (
-    id: "motiongfx",
-    title: "MotionGfx",
-    link: "https://github.com/voxell-tech/motiongfx",
+    id: "fynix",
+    title: "Fynix",
+    link: "https://github.com/voxell-tech/fynix",
   ),
 )
