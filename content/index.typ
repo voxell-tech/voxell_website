@@ -42,7 +42,7 @@
   #html.h2(class: "text-2xl font-bold mb-8 text-center")[Featured Projects]
   #html.div(class: "grid grid-cols-1 sm:grid-cols-2 gap-4")[
     #for p in (
-      ("motiongfx", "voxell-tech/motiongfx", "Backend agnostic motion graphics creation framework.", ("Rust",)),
+      ("motiongfx", "voxell-tech/motiongfx", "Backend agnostic motion graphics creation framework. Free and open-source forever.", ("Rust",)),
       (
         "velyst",
         "voxell-tech/velyst",

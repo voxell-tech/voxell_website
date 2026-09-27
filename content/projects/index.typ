@@ -7,7 +7,7 @@
   (
     name: "motiongfx",
     repo: "voxell-tech/motiongfx",
-    desc: "Backend agnostic motion graphics creation framework.",
+    desc: "Backend agnostic motion graphics creation framework. Free and open-source forever.",
   ),
   (
     name: "velyst",
