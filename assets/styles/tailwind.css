@@ -6,6 +6,12 @@
 @import "../../shared/styles.css";
 @import "../../shared/site/site.css";
 
+/* A light page a step off pure white (assets/js/voxels.js fades the
+   hero's field into the same colour). */
+[data-theme="light"] {
+    --color-bg: #f6f6f6;
+}
+
 /* Sections pad themselves (project.typ drops the kit's container),
    so each one is a centred column with room on the sides. */
 .section {
@@ -34,6 +40,13 @@
     @apply absolute inset-0 pointer-events-none;
     background:
         radial-gradient(ellipse 36% 30% at 50% 46%, var(--color-bg) 0%, color-mix(in srgb, var(--color-bg) 80%, transparent) 55%, transparent 100%),
+        linear-gradient(to top, var(--color-bg) 0%, color-mix(in srgb, var(--color-bg) 70%, transparent) 15%, color-mix(in srgb, var(--color-bg) 30%, transparent) 30%, transparent 45%);
+}
+/* The light field is brighter, so the title needs less of a backdrop:
+   a full one reads as a white haze. */
+[data-theme="light"] .hero-scrim {
+    background:
+        radial-gradient(ellipse 30% 24% at 50% 46%, color-mix(in srgb, var(--color-bg) 85%, transparent) 0%, color-mix(in srgb, var(--color-bg) 55%, transparent) 55%, transparent 100%),
         linear-gradient(to top, var(--color-bg) 0%, color-mix(in srgb, var(--color-bg) 70%, transparent) 15%, color-mix(in srgb, var(--color-bg) 30%, transparent) 30%, transparent 45%);
 }
 
@@ -95,6 +108,20 @@
 }
 .project-tile:hover {
     @apply border-accent/50 -translate-y-1 shadow-2xl shadow-accent/10 opacity-100;
+}
+/* The tiles are dark screenshots, so they stay dark on the light page
+   too, like screens set into it: a light scrim over them reads as
+   fog. */
+[data-theme="light"] .project-tile {
+    --color-accent: #78dce8;
+    --color-purple: #ab9df2;
+    --color-yellow: #ffd866;
+    --color-bg: #19181a;
+    --color-surface: #2d2a2e;
+    --color-text: #fcfcfa;
+    --color-muted: #939293;
+    --color-subtle: #c1c0c0;
+    color-scheme: dark;
 }
 
 .project-tile-media {

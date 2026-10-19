@@ -8,15 +8,6 @@
 // `tola:navigate` and picks up a fresh canvas when the home page comes
 // back.
 
-// Monokai Pro, from low columns to high ones.
-const DARK = ["#78dce8", "#a9dc76", "#ffd866", "#fc9867", "#ff6188", "#ab9df2"];
-const LIGHT = ["#0c7685", "#4a761e", "#8a6400", "#b55e1e", "#c4224f", "#6248c8"];
-
-const N = 66;
-const MAX = 6;
-
-const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-
 function rgb(hex) {
   const n = parseInt(hex.slice(1), 16);
   return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
@@ -27,6 +18,38 @@ function mix(c, to, t) {
   const m = c.map((v, i) => Math.round(v + (to[i] - v) * t));
   return `rgb(${m[0]}, ${m[1]}, ${m[2]})`;
 }
+
+// Monokai Pro, from low columns to high ones, in both themes.
+const PALETTE = ["#78dce8", "#a9dc76", "#ffd866", "#fc9867", "#ff6188", "#ab9df2"].map(rgb);
+
+// How each theme lights the field. A face is its column's colour,
+// darkened toward `shadow` (sides more than tops, by up to `shade`),
+// then faded into `bg` by depth and height: a column at the floor
+// keeps `floor` of its colour, the tallest keep all of it.
+//
+// On the dark page the shadow is the page itself, so low columns sink
+// into it. On the light page that would make sides paler than tops and
+// the floor milky, so sides darken toward ink, and the floor keeps more
+// colour.
+const THEMES = {
+  dark: {
+    bg: rgb("#19181a"),
+    shadow: rgb("#19181a"),
+    shade: 1,
+    floor: 0.32,
+  },
+  light: {
+    bg: rgb("#f6f6f6"),
+    shadow: rgb("#2d2a2e"),
+    shade: 0.7,
+    floor: 0.62,
+  },
+};
+
+const N = 66;
+const MAX = 6;
+
+const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 function mount(canvas) {
   if (canvas.dataset.mounted) return;
@@ -78,8 +101,7 @@ function mount(canvas) {
 
   function draw(dt) {
     const light = document.documentElement.dataset.theme === "light";
-    const palette = (light ? LIGHT : DARK).map(rgb);
-    const bg = rgb(light ? "#fafafa" : "#19181a");
+    const { bg, shadow, shade, floor } = light ? THEMES.light : THEMES.dark;
     const [cx, cy] = origin();
     const hw = tile / 2;
     const hh = tile / 4;
@@ -103,14 +125,20 @@ function mount(canvas) {
         if (x < -tile || x > width + tile || y > height + tile) continue;
 
         // Fade the far edge and the near rows into the page, and let
-        // only the taller columns light up.
+        // the taller columns light up.
         const depth = s / (2 * N - 2);
         const fade =
           Math.min(1, Math.max(0, depth * 2.4 - 0.2)) *
           Math.min(1, (1 - depth) * 6);
-        const lit = 0.32 + 0.68 * Math.min(1, h / (MAX - 1));
-        const colour = palette[Math.min(palette.length - 1, Math.floor(h))];
-        const toward = (t) => mix(colour, bg, 1 - fade * lit * (1 - t));
+        const lit = floor + (1 - floor) * Math.min(1, h / (MAX - 1));
+        const colour = PALETTE[Math.min(PALETTE.length - 1, Math.floor(h))];
+        // A face shaded by `t` (0 for a lit top, more for the sides).
+        const toward = (t) => {
+          const shaded = colour.map(
+            (v, n) => v + (shadow[n] - v) * t * shade,
+          );
+          return mix(shaded, bg, 1 - fade * lit);
+        };
 
         const z = h * unit;
         // Left face.
@@ -138,7 +166,9 @@ function mount(canvas) {
         ctx.lineTo(x - hw, y + hh);
         ctx.closePath();
         ctx.fill();
-        ctx.strokeStyle = mix(bg, colour, 0.18 * fade);
+        // Grid lines: a touch of colour on the dark page, a darker
+        // shade of the face on the light one.
+        ctx.strokeStyle = light ? toward(0.3) : mix(bg, colour, 0.18 * fade);
         ctx.lineWidth = 1;
         ctx.stroke();
       }
@@ -178,7 +208,6 @@ function mount(canvas) {
     if (visible) start();
   });
   observer.observe(canvas);
-
 
   // The pointer, projected back onto the grid.
   canvas.parentElement.addEventListener("pointermove", (event) => {
