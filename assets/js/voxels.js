@@ -12,7 +12,7 @@
 const DARK = ["#78dce8", "#a9dc76", "#ffd866", "#fc9867", "#ff6188", "#ab9df2"];
 const LIGHT = ["#0c7685", "#4a761e", "#8a6400", "#b55e1e", "#c4224f", "#6248c8"];
 
-const N = 44;
+const N = 66;
 const MAX = 6;
 
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -169,7 +169,7 @@ function mount(canvas) {
     frame = 0;
     observer.disconnect();
     themeWatch.disconnect();
-    window.removeEventListener("resize", onResize);
+    sizeWatch.disconnect();
     document.removeEventListener("visibilitychange", start);
   }
 
@@ -179,10 +179,6 @@ function mount(canvas) {
   });
   observer.observe(canvas);
 
-  function onResize() {
-    resize();
-    start();
-  }
 
   // The pointer, projected back onto the grid.
   canvas.parentElement.addEventListener("pointermove", (event) => {
@@ -199,7 +195,6 @@ function mount(canvas) {
     pointer.on = false;
   });
 
-  window.addEventListener("resize", onResize);
   document.addEventListener("visibilitychange", start);
   // The theme toggle repaints a paused field too.
   const themeWatch = new MutationObserver(() => draw(1));
@@ -208,13 +203,18 @@ function mount(canvas) {
     attributeFilter: ["data-theme"],
   });
 
-  resize();
   // Settle on the first frame instead of growing from flat.
   for (let k = 0; k < N * N; k++) {
     heights[k] = target(Math.floor(k / N), k % N, 0);
   }
-  draw(1);
-  start();
+  // Sized from the canvas itself, not the window, so a layout that
+  // settles after the script runs (late CSS, fonts) still fits.
+  const sizeWatch = new ResizeObserver(() => {
+    resize();
+    draw(1);
+    start();
+  });
+  sizeWatch.observe(canvas);
 }
 
 function mountAll() {
