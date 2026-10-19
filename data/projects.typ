@@ -108,8 +108,8 @@
     blurb: "A sparse map with stable generational keys.",
   ),
   (
-    id: "typeslot",
-    repo: "nixonyh/typeslot",
-    blurb: "Static slot indices for types, grouped by a marker.",
+    id: "lenz",
+    repo: "nixonyh/lenz",
+    blurb: "Compile-time paths to nested fields, as reusable handles.",
   ),
 )
