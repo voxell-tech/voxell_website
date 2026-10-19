@@ -1,35 +1,260 @@
 @import 'tailwindcss';
 
-/* Shared theme, base styles, theme-toggle + social-icon CSS. */
+/* Shared theme, base styles, theme-toggle + social-icon CSS, then the
+   site kit's own styles (Monokai accents, Markdown, code). */
 @source "../../shared";
 @import "../../shared/styles.css";
+@import "../../shared/site/site.css";
 
-/* Site-specific palette additions (Monokai Pro accents) — override/extend the
-   shared @theme. */
-@theme {
-    --color-red: #ff6188;
-    --color-orange: #fc9867;
-    --color-yellow: #ffd866;
-    --color-green: #a9dc76;
+/* Sections pad themselves (project.typ drops the kit's container),
+   so each one is a centred column with room on the sides. */
+.section {
+    @apply max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24;
 }
 
-[data-theme="light"] {
-    --color-red: #c4224f;
-    --color-orange: #b55e1e;
-    --color-yellow: #9a7000;
-    --color-green: #5a8f25;
+.section-label {
+    @apply text-xs font-bold uppercase tracking-[0.2em] text-accent mb-3;
 }
 
-/* Markdown rendered content */
-.markdown-body {
-    h1, h2, h3, h4, h5, h6 { @apply font-bold text-text mt-6 mb-2; }
-    h1 { @apply text-2xl; }
-    h2 { @apply text-xl; }
-    h3 { @apply text-lg; }
-    p { @apply mb-3; }
-    ul { @apply list-disc pl-5 mb-3 space-y-1; }
-    ol { @apply list-decimal pl-5 mb-3 space-y-1; }
-    blockquote { @apply border-l-4 border-text/20 pl-4 text-muted/70 mb-3 italic; }
-    hr { @apply border-text/10 my-4; }
-    img { @apply max-w-full rounded-lg my-4; }
+/* Hero. The canvas is assets/js/voxels.js's voxel field; the scrim
+   keeps the title readable over it, and the bottom fades into the
+   page. */
+.hero {
+    @apply relative overflow-hidden flex items-center justify-center;
+    height: min(92vh, 860px);
+    min-height: 560px;
+}
+
+.voxel-field {
+    @apply absolute inset-0 w-full h-full;
+}
+
+.hero-scrim {
+    @apply absolute inset-0 pointer-events-none;
+    background:
+        radial-gradient(ellipse 36% 30% at 50% 46%, var(--color-bg) 0%, color-mix(in srgb, var(--color-bg) 80%, transparent) 55%, transparent 100%),
+        linear-gradient(to top, var(--color-bg) 0%, transparent 14%);
+}
+
+.hero-content {
+    @apply relative z-10 flex flex-col items-center text-center px-4 -mt-16;
+}
+
+.hero-title {
+    @apply text-7xl sm:text-9xl font-black tracking-tighter mb-4 leading-none;
+    background: linear-gradient(100deg, var(--color-text) 30%, var(--color-accent) 55%, var(--color-purple) 75%, var(--color-red));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero-button {
+    @apply inline-flex items-center px-5 py-2.5 rounded-lg border border-text/15 bg-bg/60 backdrop-blur text-text font-semibold no-underline transition-all;
+}
+.hero-button:hover {
+    @apply border-accent/60 text-accent -translate-y-0.5 opacity-100;
+}
+.hero-button-primary {
+    @apply bg-accent text-bg border-accent;
+}
+.hero-button-primary:hover {
+    @apply text-bg shadow-lg shadow-accent/30;
+}
+
+/* Bento grid of project tiles. */
+.bento {
+    @apply grid gap-4 md:grid-cols-12;
+    grid-auto-rows: 22rem;
+}
+
+.project-tile {
+    @apply relative block overflow-hidden rounded-2xl border border-text/10 bg-surface no-underline transition-all duration-300;
+}
+.project-tile:hover {
+    @apply border-accent/50 -translate-y-1 shadow-2xl shadow-accent/10 opacity-100;
+}
+
+.project-tile-media {
+    @apply absolute inset-0;
+}
+.project-tile-media img {
+    @apply w-full h-full object-cover object-top transition-transform duration-500;
+}
+.project-tile:hover .project-tile-media img {
+    @apply scale-105;
+}
+
+.project-tile-scrim {
+    @apply absolute inset-0 pointer-events-none;
+    background: linear-gradient(to top, var(--color-bg) 8%, color-mix(in srgb, var(--color-bg) 75%, transparent) 38%, transparent 70%);
+}
+
+.project-tile-body {
+    @apply absolute inset-x-0 bottom-0 p-6;
+}
+
+.project-tile-arrow {
+    @apply text-muted transition-all;
+}
+.project-tile:hover .project-tile-arrow {
+    @apply text-accent translate-x-0.5 -translate-y-0.5;
+}
+
+.tile-chip {
+    @apply inline-flex items-center px-2 py-0.5 rounded-md border border-text/10 bg-bg/70 backdrop-blur text-subtle font-medium;
+}
+.tile-chip-accent {
+    @apply border-accent/40 text-accent;
+}
+
+/* A tile with no picture: a field of faint voxels. */
+.voxel-pattern {
+    @apply absolute inset-0 opacity-60;
+    background-image:
+        linear-gradient(30deg, color-mix(in srgb, var(--color-accent) 22%, transparent) 12%, transparent 12.5%, transparent 87%, color-mix(in srgb, var(--color-accent) 22%, transparent) 87.5%),
+        linear-gradient(150deg, color-mix(in srgb, var(--color-purple) 22%, transparent) 12%, transparent 12.5%, transparent 87%, color-mix(in srgb, var(--color-purple) 22%, transparent) 87.5%),
+        linear-gradient(90deg, color-mix(in srgb, var(--color-text) 6%, transparent) 2%, transparent 2.5%);
+    background-size: 56px 98px;
+}
+
+/* MotionGfx's bars (components/visuals.typ's `motion-bars`): each
+   rises 60 ms after the last, holds, and settles back, on a loop. */
+/* Above the tile's text, so the scrim doesn't dim them; at rest
+   (no animation) they stand at full height. */
+.mgfx-bars {
+    @apply absolute inset-x-8 top-8 bottom-40 flex items-end justify-between gap-2 border-b border-text/15;
+}
+.mgfx-bars span {
+    @apply block flex-1 rounded-t-md;
+    height: var(--h);
+    background: linear-gradient(to top, var(--color-accent), var(--color-purple));
+    animation: mgfx-rise 4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+    animation-delay: calc(var(--i) * 60ms);
+}
+@keyframes mgfx-rise {
+    0% { height: 4%; }
+    18%, 82% { height: var(--h); }
+    100% { height: 4%; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .mgfx-bars span {
+        animation: none;
+    }
+}
+
+/* Foundation crates. */
+.crate-chip {
+    @apply flex flex-col gap-1 p-5 rounded-xl border border-text/10 bg-surface/40 no-underline transition-all;
+}
+.crate-chip:hover {
+    @apply border-accent/50 bg-surface opacity-100;
+}
+
+/* Community call to action. */
+.community {
+    @apply relative overflow-hidden text-center rounded-3xl border border-text/10 bg-surface/40 px-6 py-16 sm:py-20;
+}
+.community-glow {
+    @apply absolute inset-0 pointer-events-none opacity-60;
+    background:
+        radial-gradient(ellipse 40% 60% at 15% 0%, color-mix(in srgb, var(--color-accent) 30%, transparent), transparent),
+        radial-gradient(ellipse 40% 60% at 85% 100%, color-mix(in srgb, var(--color-purple) 30%, transparent), transparent),
+        radial-gradient(ellipse 30% 50% at 50% 120%, color-mix(in srgb, var(--color-red) 25%, transparent), transparent);
+}
+
+/* Roadmaps (assets/js/roadmaps.js builds the cards and modal). */
+.roadmap-tabs {
+    @apply sticky top-0 z-30 flex gap-2 overflow-x-auto py-3 mb-10 bg-bg/85 backdrop-blur;
+}
+.roadmap-tab {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-full border border-text/10 text-muted font-semibold whitespace-nowrap no-underline transition-colors;
+}
+.roadmap-tab:hover {
+    @apply text-text border-text/30 opacity-100;
+}
+.roadmap-tab[data-active] {
+    @apply bg-accent text-bg border-accent;
+}
+.roadmap-tab-count:not(:empty) {
+    @apply text-xs px-1.5 rounded-full bg-text/10;
+}
+
+.issues-grid {
+    @apply grid gap-4 md:grid-cols-2;
+}
+
+.roadmap-card {
+    @apply flex flex-col gap-3 h-56 p-6 text-left rounded-xl border border-text/10 bg-surface/30 overflow-hidden cursor-pointer transition-all;
+}
+.roadmap-card:hover {
+    @apply bg-surface border-accent/40 -translate-y-0.5;
+}
+.roadmap-card-title {
+    @apply text-lg font-bold text-text transition-colors;
+}
+.roadmap-card:hover .roadmap-card-title {
+    @apply text-accent;
+}
+.roadmap-card-preview {
+    @apply text-muted text-sm leading-relaxed flex-1 overflow-hidden;
+    mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
+}
+
+.roadmap-label {
+    @apply text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded border text-accent border-accent/20 bg-accent/10;
+}
+.roadmap-label-red {
+    @apply text-red border-red/20 bg-red/10;
+}
+.roadmap-label-orange {
+    @apply text-orange border-orange/20 bg-orange/10;
+}
+.roadmap-label-green {
+    @apply text-green border-green/20 bg-green/10;
+}
+
+.roadmap-modal {
+    @apply fixed inset-0 z-[200] flex items-center justify-center p-4;
+}
+.roadmap-modal[hidden] {
+    display: none;
+}
+.roadmap-modal-backdrop {
+    @apply absolute inset-0 bg-black/60 backdrop-blur-sm;
+}
+.roadmap-modal-panel {
+    @apply relative flex flex-col w-full max-w-3xl max-h-[85vh] overflow-hidden rounded-2xl border border-text/10 bg-bg shadow-2xl;
+}
+.roadmap-modal-head {
+    @apply flex items-start justify-between gap-4 p-6 border-b border-text/10;
+}
+.roadmap-modal-badges {
+    @apply mb-3;
+}
+.roadmap-modal-title {
+    @apply text-2xl font-extrabold text-text;
+}
+.roadmap-modal-link {
+    @apply text-xs font-mono text-muted hover:text-accent underline underline-offset-4;
+}
+.roadmap-modal-close {
+    @apply text-muted hover:text-text text-lg leading-none cursor-pointer bg-transparent border-0;
+}
+.roadmap-modal-body {
+    @apply overflow-y-auto p-6 text-text text-sm leading-relaxed;
+}
+
+/* Shiki's dual-theme output in issue bodies. */
+.shiki {
+    overflow-x: auto;
+    background: var(--shiki-dark-bg) !important;
+}
+.shiki span {
+    color: var(--shiki-dark);
+}
+[data-theme="light"] .shiki {
+    background: var(--shiki-light-bg) !important;
+}
+[data-theme="light"] .shiki span {
+    color: var(--shiki-light);
 }

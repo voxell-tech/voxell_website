@@ -1,80 +1,38 @@
-#import "/templates/page.typ": page
-#import "/components/ui.typ" as ui
+#import "@tola/source:0.0.0": tola-meta
+#import "/components/visuals.typ" as vis
+#import "/data/projects.typ": foundations, projects
 
-#show: page.with(title: "Projects")
+#tola-meta((
+  title: "Projects",
+  summary: "Every Voxell project: MotionGfx, Fynix, Velyst, Moxie, Motion Matching, Xad, Cornix, and the small crates they're built on.",
+))
 
-#let projects = (
-  (
-    name: "motiongfx",
-    repo: "voxell-tech/motiongfx",
-    desc: "Backend agnostic motion graphics creation framework. Free and open-source forever.",
-  ),
-  (
-    name: "velyst",
-    repo: "voxell-tech/velyst",
-    desc: "Interactive Typst content creator using Vello and Bevy.",
-  ),
-  (
-    name: "fynix",
-    repo: "voxell-tech/fynix",
-    desc: "A composable, declarative UI framework.",
-  ),
-  (
-    name: "xad",
-    repo: "voxell-tech/xad",
-    desc: "A modern precision modeling software.",
-  ),
-  (
-    name: "bevy_motion_matching",
-    repo: "voxell-tech/bevy_motion_matching",
-    desc: "Motion matching enables characters to smoothly transition between animations without hand-crafted state machines.",
-  ),
-  (
-    name: "cornix",
-    repo: "voxell-tech/cornix",
-    desc: "Matter over Thread + Bevy ECS.",
-  ),
-)
-
-#let foundational = (
-  (
-    name: "field_path",
-    repo: "voxell-tech/field_path",
-    desc: "Type-safe, no-std field access and reflection utilities.",
-  ),
-  (
-    name: "rectree",
-    repo: "voxell-tech/rectree",
-    desc: "Representing user interfaces using a rectangle tree.",
-  ),
-  (
-    name: "sparse_map",
-    repo: "voxell-tech/sparse_map",
-    desc: "A sparse map with stable generational keys.",
-  ),
-  (
-    name: "typeslot",
-    repo: "voxell-tech/typeslot",
-    desc: "Statically assigned slot indices for types, grouped by a marker type.",
-  ),
-)
-
-= Projects
-
-#html.div(class: "grid grid-cols-1 sm:grid-cols-2 gap-4")[
-  #for p in projects {
-    ui.project-card(p.name, "https://github.com/" + p.repo, p.repo, p.desc)
-  }
+#html.section(class: "section pt-16")[
+  #vis.heading(
+    [Projects],
+    [Everything We Make],
+    body: [All free and open source, mostly Rust, often Bevy.],
+  )
+  #html.div(class: "bento")[
+    #for (i, p) in projects.enumerate() {
+      // Alternate wide and narrow, so rows don't line up in a grid.
+      // A last tile on its own row takes all of it.
+      let wide = calc.rem(calc.quo(i, 2) + i, 2) == 0
+      let alone = i == projects.len() - 1 and calc.odd(projects.len())
+      vis.tile(p, size: if alone { "md:col-span-12" } else if wide {
+        "md:col-span-7"
+      } else { "md:col-span-5" })
+    }
+  ]
 ]
 
-== Foundational
-
-#html.p(class: "text-muted mb-8")[
-  Low-level building blocks and utilities that power the projects above.
-]
-
-#html.div(class: "grid grid-cols-1 sm:grid-cols-2 gap-4")[
-  #for p in foundational {
-    ui.project-card(p.name, "https://github.com/" + p.repo, p.repo, p.desc)
-  }
+#html.section(class: "section")[
+  #vis.heading(
+    [Foundations],
+    [The Small Crates Underneath],
+    body: [Building blocks the projects above use, each usable on its own.],
+  )
+  #html.div(class: "grid gap-3 sm:grid-cols-2")[
+    #for c in foundations { vis.crate-chip(c) }
+  ]
 ]

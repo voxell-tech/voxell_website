@@ -1,69 +1,53 @@
 # ==============================================================================
-# Tola Configuration
+# Tola Configuration (v0.8.0)
 # ==============================================================================
 
-[site.info]
+[site]
+origin = "https://voxell.dev"
 title = "Voxell"
-email = "voxell.technologies@gmail.com"
 description = "Building the next generation of open-source ecosystem for makers."
 language = "en"
-url = "https://voxell.dev"
-
-[site.header]
-icon = "assets/favicon/favicon.ico"
-# styles = ["assets/styles/custom.css"]
-# scripts = [{ path = "assets/scripts/app.js", defer = true }]
-elements = [
-  '<meta name="darkreader-lock">',
-  '<script src="/scripts/theme.js"></script>',
-]
-
-[site.nav]
-spa = true
-
-[site.seo]
-auto_og = true
-
-[site.seo.feed]
-enable = false
-
-[site.seo.sitemap]
-enable = false
-path = "sitemap.xml"
 
 [build]
-content = "content"
-output = "public"
-minify = true
-deps = ["templates", "utils", "components", "shared"]
+# site.typ decides which sources under content/ are published and where.
+entry = "site.typ"
+content-dir = "content"
+publish-dir = "public"
 
-[build.assets]
-nested = [
-  "assets/styles",
-  "assets/fonts",
-  "assets/js",
-  "shared/icons",
-  "shared/scripts"
-]
-# Serve the favicon at the site root (/favicon.ico) — the path browsers auto-request.
-flatten = [
-  { file = "assets/favicon/favicon.ico", as = "favicon.ico" }
-]
-
-[build.slug]
-path = "safe"
-fragment = "full"
-separator = "dash"
-case = "lower"
-
-# Tailwind CSS - enabled by default in this template
-# Make sure tailwindcss is installed: npm install -g tailwindcss
-[build.hooks.css]
+# Tailwind CSS. Make sure tailwindcss is installed: npm install -g tailwindcss
+# The output is a build product (gitignored), published by [assets] below.
+[[build.hooks.before-build]]
 enable = true
-path = "assets/styles/tailwind.css"
-command = ["tailwindcss"]
+name = "tailwind"
+command = [
+  "tailwindcss",
+  "-i", "assets/styles/tailwind.css",
+  "-o", "assets/generated/tailwind.css",
+]
+dev = "run"
+rerun-on = ["assets/styles", "shared/styles.css", "shared/site/site.css"]
+generates = ["assets/generated/tailwind.css"]
 
-[serve]
+[assets]
+# Adds ?h=<hash> to URLs from `url-of-asset` (the stylesheet and favicon).
+cache-busting = true
+trees = [
+  { source = "assets/js", url-prefix = "/js" },
+  { source = "assets/images", url-prefix = "/images" },
+  { source = "shared/icons", url-prefix = "/icons" },
+  { source = "shared/scripts", url-prefix = "/scripts" },
+]
+files = [
+  { source = "assets/generated/tailwind.css", url = "/styles/tailwind.css" },
+  { source = "assets/favicon/favicon.ico", url = "/favicon.ico" },
+  { source = "assets/robots.txt", url = "/robots.txt" },
+  # GitHub Pages custom domain.
+  { source = "CNAME", url = "/CNAME" },
+]
+
+[server]
 interface = "127.0.0.1"
 port = 5277
+
+[dev]
 watch = true

@@ -1,20 +1,26 @@
 # Voxell Website
 
-Source for the [voxell.dev](https://voxell.dev) website, built with [tola](https://github.com/tola-ssg/tola) SSG and [Tailwind CSS v4](https://tailwindcss.com).
+Source for the [voxell.dev](https://voxell.dev) website, built with
+[Tola](https://github.com/tola-rs/tola-ssg) 0.8 and
+[Tailwind CSS v4](https://tailwindcss.com) on the project site kit in
+[`voxell_web_shared`](https://github.com/voxell-tech/voxell_web_shared)
+(the `shared/` submodule).
 
 ## Prerequisites
 
-Install **tola** (the static site generator):
+Tola, from the commit CI builds with (`TOLA_REV` in
+`.github/workflows/deploy.yml`):
 
 ```sh
-cargo install --locked tola
+cargo install --locked --git https://github.com/tola-rs/tola-ssg --rev 98f5c290da96192c8cb18704a51cf28d7285559a tola
 ```
 
-Install **Tailwind CSS** (`package.json` is already set up):
+Tailwind CSS (`package.json` is already set up), with node on `PATH`:
 
 ```sh
 npm install
 npm install -g @tailwindcss/cli
+git submodule update --init
 ```
 
 ## Development
@@ -22,7 +28,7 @@ npm install -g @tailwindcss/cli
 Start a local dev server with live reload at <http://127.0.0.1:5277>:
 
 ```sh
-tola serve
+tola dev
 ```
 
 ## Building
@@ -30,25 +36,33 @@ tola serve
 Produce a production build in `public/`:
 
 ```sh
-tola build --clean
+tola build
 ```
 
 ## Deployment
 
-Pushing to `main` triggers the GitHub Actions workflow (`.github/workflows/deploy.yml`), which builds the site and deploys `public/` to GitHub Pages automatically.
+Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the
+site and deploys `public/` to GitHub Pages.
 
 ## Project structure
 
 ```
-content/          # Pages (Typst files, one per route)
-  index.typ       # Homepage
-  projects/
-    index.typ     # /projects listing
-templates/        # Base HTML shell and page wrapper
-components/       # Reusable UI components (ui.typ, layout.typ)
-utils/            # Helper utilities
+site.typ            # Entry: hands project.typ to the shared kit
+project.typ         # Nav, brand and SEO settings for the kit
+data/projects.typ   # Every project: blurb, image, tags, star snapshot
+content/
+  index.typ         # Home: voxel hero, project bento, crates, community
+  projects/         # /projects/
+  roadmaps/         # /roadmaps/, open issues from GitHub
+  404.typ
+components/
+  visuals.typ       # Project tiles, crate chips, section headings
 assets/
-  icons/          # SVG icons and favicon
-  styles/         # Tailwind CSS entry point
-  fonts/          # Web fonts
+  js/voxels.js      # The hero's voxel field (Canvas 2D)
+  js/stars.js       # Live GitHub star and repo counts
+  js/roadmaps.js    # Roadmap tabs, issue cards and modal
+  images/projects/  # Project screenshots
+  styles/           # Tailwind CSS entry point
+scripts/
+  og-image.typ      # Social preview card (assets/images/og.png)
 ```
