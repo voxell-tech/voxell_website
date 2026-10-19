@@ -2,6 +2,7 @@
 // Import: #import "/components/visuals.typ" as vis
 
 #import "/shared/site/utils.typ": cls
+#import "/shared/links.typ": links
 
 // Opens in a new tab, for links that leave the site.
 #let external = (target: "_blank", rel: ("noopener", "noreferrer"))
@@ -95,3 +96,35 @@
   #html.h2(class: "text-4xl sm:text-5xl font-black tracking-tight mb-3")[#title]
   #if body != none { html.p(class: "text-muted text-lg")[#body] }
 ]
+
+/// A logo drawn in the text colour, from an SVG used as a mask. `src`
+/// is a name in shared/icons, or a full path.
+#let icon(src) = {
+  let url = if src.starts-with("/") { src } else {
+    "/icons/" + src + ".svg"
+  }
+  html.elem("span", attrs: (
+    class: "logo",
+    style: "--icon: url('" + url + "')",
+    aria-hidden: "true",
+  ))[]
+}
+
+/// A row of round logo links to Voxell's other homes.
+#let socials = html.div(class: "socials", {
+  for (name, label) in (
+    ("github", "GitHub"),
+    ("youtube", "YouTube"),
+    ("reddit", "Reddit"),
+    ("linkedin", "LinkedIn"),
+    ("instagram", "Instagram"),
+  ) {
+    html.a(
+      class: "social-bubble",
+      href: links.at(name),
+      title: label,
+      aria-label: label,
+      ..external,
+    )[#icon(name)]
+  }
+})

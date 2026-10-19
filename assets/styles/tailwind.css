@@ -61,6 +61,28 @@
     @apply text-bg shadow-lg shadow-accent/30;
 }
 
+/* A logo (components/visuals.typ's `icon`), in the text colour. */
+.logo {
+    @apply inline-block shrink-0 w-[1.1em] h-[1.1em];
+    background-color: currentColor;
+    -webkit-mask: var(--icon) center / contain no-repeat;
+    mask: var(--icon) center / contain no-repeat;
+}
+.hero-button {
+    @apply gap-2;
+}
+
+/* Round logo links (`socials`). */
+.socials {
+    @apply flex flex-wrap justify-center gap-3 mt-8;
+}
+.social-bubble {
+    @apply inline-flex items-center justify-center w-11 h-11 rounded-full border border-text/10 bg-bg/60 backdrop-blur text-muted text-lg transition-all;
+}
+.social-bubble:hover {
+    @apply text-accent border-accent/60 -translate-y-0.5 opacity-100;
+}
+
 /* Bento grid of project tiles. */
 .bento {
     @apply grid gap-4 md:grid-cols-12;

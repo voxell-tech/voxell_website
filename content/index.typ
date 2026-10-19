@@ -39,7 +39,11 @@
         class: "hero-button",
         href: links.discord,
         ..vis.external,
-      )[Join the Discord ↗]
+        {
+          vis.icon("discord")
+          [Join the Discord]
+        },
+      )
     })
     #html.p(class: "text-subtle text-sm")[
       #html.span(class: "text-yellow")[★]
@@ -112,19 +116,35 @@
           class: "hero-button hero-button-primary",
           href: links.discord,
           ..vis.external,
-        )[Join the Discord ↗]
-        html.a(class: "hero-button", href: "/roadmaps/")[Roadmaps →]
+          {
+            vis.icon("discord")
+            [Join the Discord]
+          },
+        )
+        html.a(class: "hero-button", href: "/roadmaps/", {
+          vis.icon("github")
+          [Roadmaps]
+        })
         html.a(
           class: "hero-button",
           href: links.opencollective,
           ..vis.external,
-        )[Open Collective ↗]
+          {
+            vis.icon("opencollective")
+            [Open Collective]
+          },
+        )
         html.a(
           class: "hero-button",
           href: links.blog,
           ..vis.external,
-        )[Read the Blog ↗]
+          {
+            vis.icon("/images/icons/blog.svg")
+            [Read the Blog]
+          },
+        )
       })
+      #vis.socials
     ]
   ]
 ]
