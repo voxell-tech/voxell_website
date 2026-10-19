@@ -48,12 +48,12 @@
   dir: ttb,
   spacing: 26pt,
   image("/shared/icons/voxell.svg", height: 72pt),
-  text(size: 140pt, weight: "bold", tracking: -4pt, fill: gradient.linear(
-    rgb("#fcfcfa"),
+  // Boxed, so the gradient spans the word instead of the whole stack.
+  box(text(size: 140pt, weight: "bold", tracking: -4pt, fill: gradient.linear(
     rgb("#78dce8"),
     rgb("#ab9df2"),
     rgb("#ff6188"),
-  ))[Voxell],
+  ))[Voxell]),
   text(size: 34pt, fill: rgb("#939293"))[
     Building tools to solve real, challenging problems.
   ],

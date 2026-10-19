@@ -13,7 +13,7 @@
     links.reddit,
     links.instagram,
   ),
-  og-image: "/images/og.png?v=1",
+  og-image: "/images/og.png?v=2",
   // The Voxell logo.
   brand: none,
   nav: parts => (
